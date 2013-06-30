@@ -1,0 +1,14 @@
+<VRLClient>
+<LicServer>
+<Host>10.0.0.1</Host>
+<Port>30304</Port>
+<Host1></Host1>
+<Port1>30304</Port1>
+<Host2></Host2>
+<Port2>30304</Port2>
+<!Proxy></!Proxy>
+<!ProxyPort>0</!ProxyPort>
+<User></User>
+<Pass></Pass>
+</LicServer>
+</VRLClient
