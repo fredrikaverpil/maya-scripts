@@ -5,6 +5,7 @@ Python
 ------
 
 * checkTracingDepth.py - Check for V-Ray shaders with high tracing depth settings
+* crashFileLoader.py - Finds the latest crash save file and loads it
 
 
 MEL
