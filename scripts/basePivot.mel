@@ -1,0 +1,14 @@
+// Centers pivot for selected object - but places it in the base of the object (min Y)
+proc basePivot()
+{
+       string $dagnodes[] = `selectedNodes -dagObjects`;
+       int $groupnum = size($dagnodes);
+       for ($i=0;$i<$groupnum;$i++) {
+           select -r $dagnodes[$i];
+	   float $bbcoord[]=`xform -q -ws -bb`;
+           xform -ws -piv (($bbcoord[0]+$bbcoord[3])/2) $bbcoord[1] (($bbcoord[2]+$bbcoord[5])/2) ;
+       }
+       select -r $dagnodes;
+}
+
+basePivot()
