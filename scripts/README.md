@@ -7,6 +7,7 @@ Python
 * checkTracingDepth.py - Check for V-Ray shaders with high tracing depth settings
 * crashFileLoader.py - Finds the latest crash save file and loads it
 * printFilePaths.py - Print file paths of each file texture
+* removeMentalRayNodes.py - Remove mental ray nodes
 
 
 MEL
