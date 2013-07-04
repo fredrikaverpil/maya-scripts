@@ -2,6 +2,11 @@
 
 import maya.cmds as cmds
 
+def deleteConstructionHistory(item):
+	try:
+		cmds.delete(item, constructionHistory=True)
+	except:
+		cmds.warning('Could not delete history for object ' + item)
 
 def findFirstMatchInString(list, text):
 	for part in list:
@@ -42,5 +47,6 @@ def deleteHistoryOnScene():
 
 	for line in logShapes:
 		print line
+
 
 deleteHistoryOnScene()
