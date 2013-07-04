@@ -9,11 +9,12 @@ def findFirstMatchInString(list, text):
 			return True # Found match
 	return False # Did not find match
 
-errors = 0
 
+errors = 0
 
 # Start out with ALL nodes possible
 nodeTypes = cmds.allNodeTypes()
+nodeTypesFiltered = []
 # Remove the following node types
 nodeTypes.remove('objectFilter')
 nodeTypes.remove('objectMultiFilter')
@@ -26,45 +27,23 @@ nodeTypes.remove('reference')
 nodeTypes.remove('deleteComponent')
 nodeTypes.remove('VRayMtl')
 nodeTypes.remove('transform')
-nodeTypes.remove('polyTweakUV')
-nodeTypes.remove('polySplitRing')
-nodeTypes.remove('polySoftEdge')
-nodeTypes.remove('polySmoothFace')
-nodeTypes.remove('polyPlanarProj')
-nodeTypes.remove('polyNormalizeUV')
-nodeTypes.remove('polyNormal')
-nodeTypes.remove('polyMoveVertex')
-nodeTypes.remove('polyMoveFace')
-nodeTypes.remove('polyMoveEdge')
-nodeTypes.remove('polyExtrudeFace')
-nodeTypes.remove('polyBevel')
-nodeTypes.remove('polyAutoProj')
-
-
-'''
-# Construct your own list of nodes to check
-nodeTypes = []
-nodeTypes.append('VRayLightIESShape')
-nodeTypes.append('VRayMesh')
-nodeTypes.append('VRayLightDomeShape')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-nodeTypes.append('')
-'''
-
-
-with open("c:/filepathDebug.txt", "a") as myfile:
-	myfile.truncate()
-
 for nodeType in nodeTypes:
-	with open("c:/filepathDebug.txt", "a") as myfile:
-		myfile.write(str(nodeType) + '\n')
+	if findFirstMatchInString(['poly', 'container', 'object', 'reference','VRayMtl', 'transform', 'mesh', 'component', 'group', 'nurbs', 'curve', 'motionPath', 'offset', 'selection'], nodeType):
+		#print 'Skipping ' + nodeType + ' from nodeTypes...'
+		pass
+	else:
+		nodeTypesFiltered.append(nodeType)
+
+
+
+#with open("c:/filepathDebug.txt", "a") as myfile:
+#	myfile.truncate()
+
+#for nodeType in nodeTypes:
+for nodeType in nodeTypesFiltered:
+	#with open("c:/filepathDebug.txt", "a") as myfile:
+	#	myfile.write(str(nodeType) + '\n')
+	#print nodeType # USE THIS TO IDENTIFY ERROROUS QUERIES
 	nodes = cmds.ls(type=nodeType)
 	for node in nodes:
 		attributes = cmds.listAttr(node, write=True, hasData=True )
