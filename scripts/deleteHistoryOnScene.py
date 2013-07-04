@@ -1,41 +1,34 @@
-# Delete all history in scene with some exclusions (defined in exclusionList)
+# Delete all history in scene with some exceptions (defined in exceptionList)
 
 import maya.cmds as cmds
 
 
-def deleteConstructionHistory(item):
-	try:
-		cmds.delete(item, constructionHistory=True)
-	except:
-		cmds.warning('Could not delete history for object ' + item)
+def findFirstMatchInString(list, text):
+	for part in list:
+		if (part in text):
+			return True
+	return False
+
 
 def checkForHistory(array):
 	log = ['\n']
+	exceptionList = ['VRayMesh', 'blendShape', 'nonLinear', 'ffd', 'cluster', 'softMod', 'sculpt', 'jiggle', 'wire']
+	
 	for item in array:
-		if len( cmds.listHistory(item)) > 0:
-			#print cmds.listHistory(item)
-			#print item + ' has history.\n'
-			if cmds.objExists(item + '.showBBoxOnly') == False:	# If this is not a vrayproxy node, go ahead and check if it has a connection to the .inMesh
-				if cmds.objExists(item + '.inMesh') == False:		# If object has no input connections to .inMesh, go ahead and delete history
-					log.append(item)
-					deleteConstructionHistory(item)
-				else:
-					# Start checking for exclusions such as deformers which will abort history deletion
-					foundDeformer = False
-					connections = cmds.listConnections(item + '.inMesh')
-					if connections == None:
-						log.append(item)
-						deleteConstructionHistory(item)
-					else:
-						exclusionList = ['VRayMesh', 'blendShape', 'nonLinear', 'ffd', 'cluster', 'softMod', 'sculpt', 'jiggle', 'wire']
+		if cmds.objExists(item):
+			if cmds.isFromReferencedFile(item) == False:
+				foundException = False
+				if len( cmds.listHistory(item)) > 1:
+					#print cmds.listHistory(item)
+					#print item + ' has history.\n'
+					connections = cmds.listConnections(item)
+					if connections != None:
 						for connection in connections:
-							# print cmds.nodeType( connection )
-							if cmds.nodeType( connection ) in exclusionList:
-								foundDeformer = True
-								#print 'Found deformer on ' + item + ' (' + connection + ') - skipping this object'
-						if foundDeformer == False:
-							#print 'Deleting history on ' + item
-							log.append(item)
+							if findFirstMatchInString(exceptionList, cmds.nodeType( connection )):
+								foundException = True
+								log.append('Exception found for ' + item + '.' + connection)
+						if foundException == False:
+							log.append('Deleting history on ' + item)
 							deleteConstructionHistory(item)
 	return log
 
@@ -43,5 +36,11 @@ def checkForHistory(array):
 def deleteHistoryOnScene():
 	logTransforms = checkForHistory( cmds.ls(type='transform') )
 	logShapes = checkForHistory( cmds.ls(type='shape') )
+
+	for line in logTransforms:
+		print line
+
+	for line in logShapes:
+		print line
 
 deleteHistoryOnScene()
