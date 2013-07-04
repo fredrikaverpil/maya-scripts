@@ -23,7 +23,7 @@ def checkForHistory(array):
 		if cmds.objExists(item):
 			if cmds.isFromReferencedFile(item) == False:
 				foundException = False
-				if len( cmds.listHistory(item)) > 1:
+				if len( cmds.listHistory(item)) > 0:
 					#print cmds.listHistory(item)
 					#print item + ' has history.\n'
 					connections = cmds.listConnections(item)
