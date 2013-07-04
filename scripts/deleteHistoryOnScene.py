@@ -2,8 +2,9 @@
 
 import maya.cmds as cmds
 
+
 def deleteConstructionHistory(item):
-  try:
+	try:
 		cmds.delete(item, constructionHistory=True)
 	except:
 		cmds.warning('Could not delete history for object ' + item)
@@ -14,7 +15,7 @@ def checkForHistory(array):
 		if len( cmds.listHistory(item)) > 0:
 			#print cmds.listHistory(item)
 			#print item + ' has history.\n'
-			if cmds.objExists(item + '.showBBoxOnly.') == False:	# If this is not a vrayproxy node, go ahead and delete history
+			if cmds.objExists(item + '.showBBoxOnly') == False:	# If this is not a vrayproxy node, go ahead and check if it has a connection to the .inMesh
 				if cmds.objExists(item + '.inMesh') == False:		# If object has no input connections to .inMesh, go ahead and delete history
 					log.append(item)
 					deleteConstructionHistory(item)
@@ -26,7 +27,7 @@ def checkForHistory(array):
 						log.append(item)
 						deleteConstructionHistory(item)
 					else:
-						exclusionList = ['blendShape', 'nonLinear', 'ffd', 'cluster', 'softMod', 'sculpt', 'jiggle', 'wire']
+						exclusionList = ['VRayMesh', 'blendShape', 'nonLinear', 'ffd', 'cluster', 'softMod', 'sculpt', 'jiggle', 'wire']
 						for connection in connections:
 							# print cmds.nodeType( connection )
 							if cmds.nodeType( connection ) in exclusionList:
