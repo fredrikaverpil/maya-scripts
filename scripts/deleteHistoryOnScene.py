@@ -21,7 +21,7 @@ def checkForHistory(array):
 	
 	for item in array:
 		if cmds.objExists(item):
-			if cmds.isFromReferencedFile(item) == False:
+			if cmds.referenceQuery(item, isNodeReferenced=True) == False:
 				foundException = False
 				if len( cmds.listHistory(item)) > 0:
 					#print cmds.listHistory(item)
@@ -47,6 +47,8 @@ def deleteHistoryOnScene():
 
 	for line in logShapes:
 		print line
+
+deleteHistoryOnScene()
 
 
 deleteHistoryOnScene()
