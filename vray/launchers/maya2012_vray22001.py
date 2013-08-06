@@ -39,6 +39,8 @@ if(sys.platform == 'win32'):
 	os.environ['MAYA_PLUG_IN_PATH'] = os.environ['MAYA_PLUG_IN_PATH'] + ';' + volume + buildsLocation + buildFolderName + '/maya_vray/plug-ins'
 	os.environ['MAYA_SCRIPT_PATH'] = os.environ['MAYA_SCRIPT_PATH'] + ';' + volume + buildsLocation + buildFolderName + '/maya_vray/scripts'
 	os.environ['XBMLANGPATH'] = volume + buildsLocation + buildFolderName + '/maya_vray/icons/%B' + ';' + volume + buildsLocation + buildFolderName + '/maya_vray/icons/'
+	os.environ['VRAY_PATH'] = volPipeline + vrayBaseLocation + buildName + '/maya_vray/bin'
+	os.environ['VRAY_TOOLS_MAYA' + buildMayaVersion + '_x64'] = volPipeline + vrayBaseLocation + buildName + '/vray/bin'
 elif(sys.platform == 'darwin'):
 	print('Setting OS X environment variables...')
 	os.environ['MAYA_RENDER_DESC_PATH'] = volume + buildsLocation + buildFolderName + '/maya_root/bin/rendererDesc'
@@ -51,6 +53,8 @@ elif(sys.platform == 'darwin'):
 	os.environ['MAYA_PLUG_IN_PATH'] = os.environ['MAYA_PLUG_IN_PATH'] + ':' + volume + buildsLocation + buildFolderName + '/maya_vray/plug-ins'
 	os.environ['MAYA_SCRIPT_PATH'] = os.environ['MAYA_SCRIPT_PATH'] + ':' +volume + buildsLocation + buildFolderName + '/maya_vray/scripts'
 	os.environ['XBMLANGPATH'] = volume + buildsLocation + buildFolderName + '/maya_vray/icons/%B' + ':' + volume + buildsLocation + buildFolderName + '/maya_vray/icons/'
+	os.environ['VRAY_PATH'] = volPipeline + vrayBaseLocation + buildName + '/maya_vray/bin'
+	os.environ['VRAY_TOOLS_MAYA' + buildMayaVersion + '_x64'] = volPipeline + vrayBaseLocation + buildName + '/vray/bin'
 	os.environ['DYLD_LIBRARY_PATH'] = volume + buildsLocation + buildFolderName + '/maya_root/MacOS/'
  
 # Source the three MEL files
