@@ -1,6 +1,6 @@
 // Pre/post render script loader 1.0
 //
-// Installation: place this in your MAYA_SCRIPT_PATH
+// Installation: place this MEL script in your MAYA_SCRIPT_PATH
 //
 // Usage:
 // Render.exe -preRender pythonPrePostRenderLoader("C:/MayaProject", "myScriptFile.py")
