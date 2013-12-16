@@ -13,6 +13,7 @@ Python
 * deleteMentalRayNodes.py - Remove mental ray nodes (does not really work)
 * findBadFilepaths.py - Identify filepaths of the current scene (including references) which include your choice of drive letters
 * printFilePaths.py - Print file paths of each file texture
+* pythonPrePostRenderLoader.mel - Loads a pre-render or post-render Python script
 * samplerInfoMaker.py - Create a sampler info network for selected texture(s)
 
 
