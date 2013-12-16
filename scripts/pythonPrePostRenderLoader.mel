@@ -4,7 +4,7 @@
 // Installation: place this MEL script in your MAYA_SCRIPT_PATH
 //
 // Usage:
-// Render.exe -preRender pythonPrePostRenderLoader("C:/MayaProject", "myScriptFile.py")
+// Render.exe -preRender pythonPrePostRenderLoader("C:/MayaProject", "myScriptFile.py") C:/MayaProject/scenes/MyScene.ma
 //
 // Apply to Tractor .alf like this:
 // preRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
