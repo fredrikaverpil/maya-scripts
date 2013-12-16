@@ -4,7 +4,7 @@
 // Installation: place this MEL script in your MAYA_SCRIPT_PATH
 //
 // Usage:
-// Use the MEL function when commandline rendering and feed it two arguments, the path to the script file and the scriptfile itself
+// Use the MEL function when commandline rendering and feed it two arguments: 1) the path to the script file and 2) the scriptfile itself
 // Render.exe -preRender pythonPrePostRenderLoader("C:/MayaProject", "myScriptFile.py") C:/MayaProject/scenes/MyScene.ma
 //
 // Apply to Tractor .alf like this:
