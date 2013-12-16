@@ -1,5 +1,10 @@
 // Pre/post render script loader 1.0
 //
+// Installation: place this in your MAYA_SCRIPT_PATH
+//
+// Usage:
+// Render.exe -preRender pythonPrePostRenderLoader("C:/MayaProject", "myScriptFile.py")
+//
 // Apply to Tractor .alf like this:
 // preRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
 // postRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
