@@ -1,0 +1,74 @@
+// Pre render script consolidator 1.0
+// by Fredrik Averpil, fredrik.averpil [at] gmail.com
+//
+// Installation: place this MEL script in your MAYA_SCRIPT_PATH
+//
+// Please note: Any existing MEL will NOT get excectuted when -preRender is defined on the commandline.
+//
+// Usage:
+// Use the MEL function when commandline rendering and feed it any number of scripts, separated by a space. Example:
+// Render.exe -preRender RenderScriptConsolidator("C:/preRender.mel C:/preRender.py") C:/MayaProject/scenes/MyScene.ma
+//
+// OLD OLD OLD --------------- -------------- OLD OLD OLD -------------- ---------------
+// Apply to Tractor .alf like this:
+// preRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
+// postRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
+//  ... + ' -preRender ' + preRenderString + ' -postRender ' + postRenderString + ...
+// OLD OLD OLD --------------- -------------- OLD OLD OLD -------------- ---------------
+
+
+proc string basename(string $filepath)
+{
+	string $basename = match( "[^/\\]*$", $filepath );
+	return $basename;
+}
+
+
+proc string folderpath( string $filepath )
+{
+  string $dir = match( "^.*/", $filepath );
+
+  int $sz = size( $dir );
+  // Strip off trailing '/'
+  //
+  if ( ( $sz > 1 ) && ( substring( $dir, $sz, $sz ) == "/" ) ) {
+    $dir = substring( $dir, 1, ($sz - 1) );
+  }
+  return $dir;
+}
+
+
+global proc RenderScriptConsolidator(string $arguments)
+{
+	print("------------ PRE/POST-RENDER SCRIPT CONSOLIDATOR START ------------\n");
+	//print("Received arguments: " + $arguments + "...\n");
+
+	// Split $arguments string into $buffer array
+	string $buffer[];
+	$numTokens = tokenize($arguments, $buffer);
+	print("Attempting to load and execute scripts:\n");
+
+	// For each script file, load it
+	for( $item in $buffer){
+		//print($item + "\n");
+		$basename = basename( $item );
+		$folderpath = folderpath( $item );
+		if( `match ".py" $basename` != "" ){
+			// Assume Python code
+			print("Python script detected. Executing " + $basename + "\n");
+			python("import sys\nsys.path.append(\"" + $folderpath + "\")\nimport " + $basename); // Make sure the Pyhton script is executed by itself
+			print("\nDone executing " + $basename + "\n");
+		}else {
+			// Assume MEL code
+			print("MEL script detected. Executing " + $basename + " ...\n");
+			string $command = "source \""+$item+"\""; // Make sure the MEL script is executed by itself
+			eval $command;
+			print("\nDone executing " + $basename + "\n");
+
+		}
+
+	}
+
+	print("------------ PRE/POST-RENDER SCRIPT CONSOLIDATOR END ------------\n");
+} 
+
