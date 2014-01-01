@@ -1,4 +1,4 @@
-// Pre/post render script consolidator
+// Pre/post render script consolidator 1.0
 // by Fredrik Averpil, fredrik.averpil [at] gmail.com
 //
 // Installation: place this MEL script in your MAYA_SCRIPT_PATH
@@ -6,8 +6,8 @@
 // Please note: Any existing MEL in the Maya scene file (Render Globals) is overridden by this consolidation.
 //
 // Usage:
-// Use the MEL function when commandline rendering and feed it any number of scripts, separated by a comma (no space). Example:
-// Render.exe -preRender "RenderScriptConsolidator(\"C:/preRender.mel,C:/preRender.py\")" C:/MayaProject/scenes/MyScene.ma
+// Use the MEL function when commandline rendering and feed it any number of scripts. Example:
+// Render.exe -preRender "RenderScriptConsolidator({\"C:/preRender.mel\", \"C:/preRender.py\", \"C:/preRender2.py\"})" C:/MayaProject/scenes/MyScene.ma
 //
 // ------------------ OLD, NEEDS UPDATING ------------------
 // Apply to Tractor .alf like this:
@@ -38,18 +38,13 @@ proc string folderpath( string $filepath )
 }
 
 
-global proc RenderScriptConsolidator(string $arguments)
+global proc RenderScriptConsolidator(string $arguments[])
 {
 	print("------------ PRE/POST-RENDER SCRIPT CONSOLIDATOR START ------------\n");
-	//print("Received arguments: " + $arguments + "...\n");
-
-	// Split $arguments string into $buffer array
-	string $buffer[];
-	$numTokens = `tokenize $arguments "," $buffer`;
 	print("Attempting to load and execute scripts:\n");
 
 	// For each script file, load it
-	for( $item in $buffer){
+	for( $item in $arguments){
 		//print($item + "\n");
 		$basename = basename( $item );
 		$folderpath = folderpath( $item );
