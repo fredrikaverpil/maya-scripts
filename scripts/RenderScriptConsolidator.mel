@@ -6,15 +6,15 @@
 // Please note: Any existing MEL in the Maya scene file (Render Globals) is overridden by this consolidation.
 //
 // Usage:
-// Use the MEL function when commandline rendering and feed it any number of scripts, separated by a space. Example:
-// Render.exe -preRender RenderScriptConsolidator("C:/preRender.mel C:/preRender.py") C:/MayaProject/scenes/MyScene.ma
+// Use the MEL function when commandline rendering and feed it any number of scripts, separated by a comma (no space). Example:
+// Render.exe -preRender "RenderScriptConsolidator(\"C:/preRender.mel,C:/preRender.py\")" C:/MayaProject/scenes/MyScene.ma
 //
-// OLD OLD OLD --------------- -------------- OLD OLD OLD -------------- ---------------
+// ------------------ OLD, NEEDS UPDATING ------------------
 // Apply to Tractor .alf like this:
 // preRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
 // postRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
 //  ... + ' -preRender ' + preRenderString + ' -postRender ' + postRenderString + ...
-// OLD OLD OLD --------------- -------------- OLD OLD OLD -------------- ---------------
+// ------------------ OLD, NEEDS UPDATING ------------------
 
 
 proc string basename(string $filepath)
@@ -45,7 +45,7 @@ global proc RenderScriptConsolidator(string $arguments)
 
 	// Split $arguments string into $buffer array
 	string $buffer[];
-	$numTokens = tokenize($arguments, $buffer);
+	$numTokens = `tokenize $arguments "," $buffer`;
 	print("Attempting to load and execute scripts:\n");
 
 	// For each script file, load it
@@ -55,12 +55,12 @@ global proc RenderScriptConsolidator(string $arguments)
 		$folderpath = folderpath( $item );
 		if( `match ".py" $basename` != "" ){
 			// Assume Python code
-			print("Python script detected. Executing " + $basename + "\n");
+			print("\nPython script detected. Executing " + $basename + "\n");
 			python("import sys\nsys.path.append(\"" + $folderpath + "\")\nimport " + $basename); // Make sure the Pyhton script is executed by itself
 			print("\nDone executing " + $basename + "\n");
 		}else {
 			// Assume MEL code
-			print("MEL script detected. Executing " + $basename + " ...\n");
+			print("\nMEL script detected. Executing " + $basename + " ...\n");
 			string $command = "source \""+$item+"\""; // Make sure the MEL script is executed by itself
 			eval $command;
 			print("\nDone executing " + $basename + "\n");
