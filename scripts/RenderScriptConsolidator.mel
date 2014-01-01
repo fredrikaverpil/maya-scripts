@@ -41,8 +41,6 @@ proc string folderpath( string $filepath )
 global proc RenderScriptConsolidator(string $arguments[])
 {
 	print("------------ PRE/POST-RENDER SCRIPT CONSOLIDATOR START ------------\n");
-	print("Attempting to load and execute scripts:\n");
-
 	// For each script file, load it
 	for( $item in $arguments){
 		//print($item + "\n");
@@ -50,16 +48,16 @@ global proc RenderScriptConsolidator(string $arguments[])
 		$folderpath = folderpath( $item );
 		if( `match ".py" $filename` != "" ){
 			// Assume Python code
-			print("\nPython script detected. Executing " + $filename + "\n");
+			print("Python script detected. Executing " + $filename + " ...\n");
 			$modulename = `substitute ".py" $filename ""`;
 			python("import sys\nsys.path.append(\"" + $folderpath + "\")\nimport " + $modulename); // Make sure the Pyhton script is executed by itself
-			print("\nDone executing " + $filename + "\n");
+			print("Done executing " + $filename + "\n");
 		}else if( `match ".mel" $filename` != "" ){
 			// Assume MEL code
-			print("\nMEL script detected. Executing " + $filename + " ...\n");
+			print("MEL script detected. Executing " + $filename + " ...\n");
 			string $command = "source \""+$item+"\""; // Make sure the MEL script is executed by itself
 			eval $command;
-			print("\nDone executing " + $filename + "\n");
+			print("Done executing " + $filename + "\n");
 
 		}
 
