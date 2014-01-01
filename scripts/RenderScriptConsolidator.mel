@@ -3,11 +3,11 @@
 //
 // Installation: place this MEL script in your MAYA_SCRIPT_PATH
 //
-// Please note: Any existing MEL in the Maya scene file (Render Globals) is overridden by this consolidation.
-//
 // Usage:
 // Use the MEL function when commandline rendering and feed it any number of scripts. Example:
 // Render.exe -preRender "RenderScriptConsolidator({\"C:/preRender.mel\", \"C:/preRender.py\", \"C:/preRender2.py\"})" C:/MayaProject/scenes/MyScene.ma
+//
+// Please note: Any existing MEL in the Maya scene file (Render Globals) is overridden by this consolidation.
 //
 // ------------------ OLD, NEEDS UPDATING ------------------
 // Apply to Tractor .alf like this:
