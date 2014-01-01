@@ -17,10 +17,10 @@
 // ------------------ OLD, NEEDS UPDATING ------------------
 
 
-proc string basename(string $filepath)
+proc string filename(string $filepath)
 {
-	string $basename = match( "[^/\\]*$", $filepath );
-	return $basename;
+	string $filename = match( "[^/\\]*$", $filepath );
+	return $filename;
 }
 
 
@@ -46,19 +46,20 @@ global proc RenderScriptConsolidator(string $arguments[])
 	// For each script file, load it
 	for( $item in $arguments){
 		//print($item + "\n");
-		$basename = basename( $item );
+		$filename = filename( $item );
 		$folderpath = folderpath( $item );
-		if( `match ".py" $basename` != "" ){
+		if( `match ".py" $filename` != "" ){
 			// Assume Python code
-			print("\nPython script detected. Executing " + $basename + "\n");
-			python("import sys\nsys.path.append(\"" + $folderpath + "\")\nimport " + $basename); // Make sure the Pyhton script is executed by itself
-			print("\nDone executing " + $basename + "\n");
-		}else {
+			print("\nPython script detected. Executing " + $filename + "\n");
+			$modulename = `substitute ".py" $filename ""`;
+			python("import sys\nsys.path.append(\"" + $folderpath + "\")\nimport " + $modulename); // Make sure the Pyhton script is executed by itself
+			print("\nDone executing " + $filename + "\n");
+		}else if( `match ".mel" $filename` != "" ){
 			// Assume MEL code
-			print("\nMEL script detected. Executing " + $basename + " ...\n");
+			print("\nMEL script detected. Executing " + $filename + " ...\n");
 			string $command = "source \""+$item+"\""; // Make sure the MEL script is executed by itself
 			eval $command;
-			print("\nDone executing " + $basename + "\n");
+			print("\nDone executing " + $filename + "\n");
 
 		}
 
