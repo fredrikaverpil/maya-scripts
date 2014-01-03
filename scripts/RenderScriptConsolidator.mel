@@ -11,8 +11,12 @@
 //
 // ------------------ OLD, NEEDS UPDATING ------------------
 // Apply to Tractor .alf like this:
-// preRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
-// postRenderString = '{pythonPreRenderLoader("' + filepath + '/' + '", "myscript.py");}'
+// preScriptFilepath1 = '/blah/scriptPre.mel'
+// preScriptFilepath2 = '/blah/scriptPre.py'
+// postScriptFilepath1 = '/blah/scriptPost.mel'
+// postScriptFilepath2 = '/blah/scriptPost.py'
+// preRenderString = '{RenderScriptConsolidator({"' + preScriptFilepath1 + '", "' + preScriptFilepath2 + '"});}'
+// postRenderString = '{RenderScriptConsolidator({"' + postScriptFilepath1 + '", "' + postScriptFilepath2 + '"});}'
 //  ... + ' -preRender ' + preRenderString + ' -postRender ' + postRenderString + ...
 // ------------------ OLD, NEEDS UPDATING ------------------
 
