@@ -9,7 +9,6 @@
 //
 // Please note: Any existing MEL in the Maya scene file's render globals/render options is overridden by this consolidation.
 //
-// ------------------ OLD, NEEDS UPDATING ------------------
 // Apply to Tractor .alf like this:
 // preScriptFilepath1 = '/blah/scriptPre.mel'
 // preScriptFilepath2 = '/blah/scriptPre.py'
@@ -18,7 +17,7 @@
 // preRenderString = '{RenderScriptConsolidator({"' + preScriptFilepath1 + '", "' + preScriptFilepath2 + '"});}'
 // postRenderString = '{RenderScriptConsolidator({"' + postScriptFilepath1 + '", "' + postScriptFilepath2 + '"});}'
 //  ... + ' -preRender ' + preRenderString + ' -postRender ' + postRenderString + ...
-// ------------------ OLD, NEEDS UPDATING ------------------
+
 
 
 proc string filename(string $filepath)
